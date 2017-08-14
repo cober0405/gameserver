@@ -5,7 +5,7 @@
 var NODE_ENV = process.env.NODE_ENV;
 // var app ;
 var app = require('../src/app');
-var debug = require('debug')('m.ehsy.com:server');
+var debug = require('debug')('game:server');
 var http = require('http');
 
 app = require('../src/app');
