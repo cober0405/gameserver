@@ -32,7 +32,7 @@ function checkPointInFish(fish, xPos, yPos) {
 
 function checkFishOut(fish) {
     var result = true;
-    if (fish.xPos >= fish.width * -1 && fish.xPos <= tankWidth) {
+    if (fish.xPos >= fish.width * -1 && fish.xPos <= tankWidth + fish.width && fish.yPos > 150) {
         result = false;
     }
     return result;
@@ -73,7 +73,7 @@ function FishTank() {
         this.rightHook.isThrowing = true;
     };
 
-    function checkFishHook(fish, hook) {
+    function checkFishHook(ind, fish, hook) {
 
         var result;
 
@@ -88,7 +88,8 @@ function FishTank() {
             console.log(result);
             hook.throwDirection = -1;
             hook.hasHooked = true;
-            hook.hookedFishType = fish.fishType;
+            hook.hookedFishType = ind;
+            hook.score += fish.score;
             // var newFish = null;
             // newFish = FishFactory.jumpFish(tankWidth, tankHeight, tankLines);
             //TODO
@@ -116,24 +117,30 @@ function FishTank() {
             this.fishList[i].swim();
 
             if (this.leftHook.isThrowing) {
-                if(!this.leftHook.hasHooked){
-                    if(checkFishHook(this.fishList[i], this.leftHook)){
+                if (!this.leftHook.hasHooked) {
+                    if (checkFishHook(i, this.fishList[i], this.leftHook)) {
                         this.fishList[i].xPos = this.leftHook.xPos;
                         this.fishList[i].yPos = this.leftHook.yPos;
-
-                        // this.fishList[i] = null;
-                        // this.fishList[i] = FishFactory.jumpFish(tankWidth, tankHeight, tankLines);
                     }
-                }else{
-                    this.fishList[i].xPos = this.leftHook.xPos;
-                    this.fishList[i].yPos = this.leftHook.yPos;
+                } else {
+                    if (this.leftHook.hookedFishType == i) {
+                        this.fishList[i].xPos = this.leftHook.xPos;
+                        this.fishList[i].yPos = this.leftHook.yPos;
+                    }
                 }
             }
 
             if (this.rightHook.isThrowing) {
-                if(checkFishHook(this.fishList[i], this.rightHook)){
-                    this.fishList[i] = null;
-                    this.fishList[i] = FishFactory.jumpFish(tankWidth, tankHeight, tankLines);
+                if (!this.rightHook.hasHooked) {
+                    if (checkFishHook(i, this.fishList[i], this.rightHook)) {
+                        this.fishList[i].xPos = this.rightHook.xPos;
+                        this.fishList[i].yPos = this.rightHook.yPos;
+                    }
+                } else {
+                    if (this.rightHook.hookedFishType == i) {
+                        this.fishList[i].xPos = this.rightHook.xPos;
+                        this.fishList[i].yPos = this.rightHook.yPos;
+                    }
                 }
             }
 
@@ -146,7 +153,8 @@ function FishTank() {
                 + this.fishList[i].fishType + "," + this.fishList[i].swimDirection;
         }
 
-        pos += "," + this.leftHook.hasHooked + "," + this.leftHook.hookedFishType
+        pos += "," + this.leftHook.score + "," + this.rightHook.score +
+            "," + this.leftHook.hasHooked + "," + this.leftHook.hookedFishType
             + "," + this.rightHook.hasHooked + "," + this.rightHook.hookedFishType;
 
         return pos;

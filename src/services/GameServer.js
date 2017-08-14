@@ -63,11 +63,17 @@ function GameServer(params, callback) {
 
     this.startGame = function () {
         var ft = new FishTank();
+        var count = 0;
         that.testData.ft = ft;
         that.sendMessage('startGame', ft.updateStatus());
         that.si = setInterval(function () {
-            that.sendMessage('updateTank', ft.updateStatus());
-        }, 10);
+            count++;
+            if(count%2==0){
+                that.sendMessage('updateTank', ft.updateStatus());
+            }else{
+                ft.updateStatus();
+            }
+        }, 50);
     }
 }
 

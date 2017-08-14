@@ -22,6 +22,7 @@ function Hook(x,y,w,h,rs,ts,a,rl,rx,ry) {
     this.ropeYPos = ry;
     this.ropeLengthExt = this.ropeLength;
     this.hookedFishType = -1;
+    this.score = 0;
 
     this.initHookStatus = function () {
         this.throwDirection = 1;
