@@ -108,10 +108,7 @@ function FishTank() {
 
         // console.log("RightHook isThrowing: " + this.rightHook.isThrowing);
         updateHook(this.rightHook);
-
-        var pos = this.leftHook.xPos + "," + this.leftHook.yPos + "," + this.rightHook.xPos + "," + this.rightHook.yPos;
-
-        pos += "," + fishCount;
+        var pos = fishCount;
 
         for (var i = 0; i < fishCount; i++) {
             this.fishList[i].swim();
@@ -153,9 +150,12 @@ function FishTank() {
                 + this.fishList[i].fishType + "," + this.fishList[i].swimDirection;
         }
 
-        pos += "," + this.leftHook.score + "," + this.rightHook.score +
-            "," + this.leftHook.hasHooked + "," + this.leftHook.hookedFishType
-            + "," + this.rightHook.hasHooked + "," + this.rightHook.hookedFishType;
+        pos += "," + this.leftHook.xPos + "," + this.leftHook.yPos +
+            "," + this.leftHook.ancle + "," + this.leftHook.score +
+            "," + this.leftHook.hasHooked + "," + this.leftHook.hookedFishType +
+            "," + this.rightHook.xPos + "," + this.rightHook.yPos +
+            "," + this.rightHook.ancle + "," + this.rightHook.score +
+            "," + this.rightHook.hasHooked + "," + this.rightHook.hookedFishType;
 
         return pos;
     }
