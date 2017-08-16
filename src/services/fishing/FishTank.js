@@ -150,9 +150,11 @@ function FishTank() {
                 + this.fishList[i].fishType + "," + this.fishList[i].swimDirection;
         }
 
-        pos += "," + this.leftHook.xPos + "," + this.leftHook.yPos +
+        pos += "," + this.leftHook.isThrowing +
+            "," + this.leftHook.xPos + "," + this.leftHook.yPos +
             "," + this.leftHook.ancle + "," + this.leftHook.score +
             "," + this.leftHook.hasHooked + "," + this.leftHook.hookedFishType +
+            "," + this.rightHook.isThrowing +
             "," + this.rightHook.xPos + "," + this.rightHook.yPos +
             "," + this.rightHook.ancle + "," + this.rightHook.score +
             "," + this.rightHook.hasHooked + "," + this.rightHook.hookedFishType;

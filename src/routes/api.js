@@ -59,7 +59,7 @@ router.get('/getUrl', function (req, res) {
     res.header('Access-Control-Allow-Origin', '*');
 
     var resData = {
-        host: '192.168.10.210',
+        host: '127.0.0.1',
         port: 8001,
         roomId: currentRoom,
         player: 0
@@ -79,7 +79,6 @@ router.get('/getUrl', function (req, res) {
         res.app.locals.socket_map[res.app.locals.roomNum].pNum++;
         res.app.locals.roomNum++;
     }
-
     res.json(200, {data: resData});
 });
 

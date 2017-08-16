@@ -30,17 +30,7 @@ var server = ws.createServer(function (connection) {
             connection.player = data.player;
             var broadData;
 
-            if (connection.type == 'create') {
-                if (connection.player == 1) {
-                    broadData = {type: 'ready'};
-                } else if (connection.player == 2) {
-                    broadData = {type: 'go'};
-                }
-            } else if (connection.type == 'game') {
-                broadData = data;
-            } else {
-                broadData = data;
-            }
+            broadData = data;
 
             broadcast(JSON.stringify(broadData));
 
