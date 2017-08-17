@@ -1,0 +1,6 @@
+{
+  "CHECK_USER": 0,
+  "CHECK_GAME_SERVER": 1,
+  "LEAVE_ROOM": 13,
+  "SEND_MESSAGE": 21
+}

@@ -72,7 +72,6 @@ app.use('/static', express.static(__dirname + '/static'));
 
 app.locals.socket_map = {};
 app.locals.roomNum = 0;
-app.locals.user_map = {};
 /* API Routes */
 app.use('/api', require('./routes/api'));
 
@@ -93,7 +92,24 @@ app.use(function (req, res, next) {
 });
 
 // error handlers
+var os = require('os');
+function getLocalIP() {
+    var ifaces = os.networkInterfaces();
+    // console.log(ifaces);
+    var ip = 0;
+    for (var dev in ifaces) {
+        ifaces[dev].forEach(function (details) {
+            if (details.family == 'IPv4' && details.internal == false) {
+                ip = details.address;
+            }
+        });
+    }
+    return ip;
+}
+var port = process.env.PORT || '3000';
+console.log(getLocalIP() + ':' + port);
 
+app.locals.addr = getLocalIP() + ':' + port;
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {

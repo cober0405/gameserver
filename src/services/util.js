@@ -1,7 +1,5 @@
 var express = require('express');
 var crypto = require('crypto');
-var tokenName = require('../data/config.json').tokenName;
-var accountIdName = require('../data/config.json').accountIdName;
 
 function md5(str) {
     var md5sum = crypto.createHash('md5');
@@ -10,29 +8,32 @@ function md5(str) {
     return str;
 }
 
-var appKey = '5600441101c8818c4480d3c503742a3b';
+var gameServerKey = '85fcaefc3ad955d814e1e9605b674719';
 
 module.exports = {
-    getSign: function (params) {
-        var temArray = [];
-        for (var i in params) {
-            temArray.push(i);
-        }
-        temArray.sort();
-        var str = '';
-        for (var j in temArray) {
-            str += params[temArray[j]];
-        }
-        str += appKey;
-        return md5(str).toUpperCase();
+    construct: function (params) {
+        return params.appId + '|' + params.handler + '|' + params.uid + '|'
+            + params.roomId + '|' + params.ts + '|' + encodeURI(params.gd);
     },
-    getSignCreate: function (params) {
-        var sign = params.appId + params.gameTransCode + params.pid + params.quantity + params.token + params.appKey;
-        return md5(sign).toUpperCase();
+    deconstruct: function (msg) {
+        var arr = msg.split('|');
+        var gdArr = decodeURI(arr[5]).split(',');
+        return {
+            appId: arr[0],
+            handler: arr[1],
+            uid: arr[2],
+            roomId: arr[3],
+            ts: arr[4],
+            gd: {
+                player: gdArr[0],
+                type: gdArr[1]
+            }
+        };
     },
-    getShareSign: function (params) {
-        // var sign = params.appId + params.jsApiTicket + params.appKey;
-        var sign = params.allianceId + params.appId + params.appKey;
-        return md5(sign).toUpperCase();
+    getMd5: function (data) {
+        return md5(data);
+    },
+    getGameServerId: function (data) {
+        return md5(data + gameServerKey);
     }
 };
