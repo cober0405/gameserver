@@ -8,10 +8,12 @@ var LittleFish = require('./LittleFish');
 var hookSpeed = 8;
 var hookWidth = 20;
 var hookHeight = 20;
+var rollSpeed = 5;
+var ancle = 15;
 module.exports = {
     jumpHook: function (ropeXPos, ropeYPos, ropeLen) {
         return new Hook((ropeXPos - (ropeLen * Math.cos(Math.PI * 15 / 180))),
-            (ropeYPos + ( ropeLen * Math.sin(Math.PI * 15 / 180))), hookWidth, hookHeight, 5, hookSpeed, 15, ropeLen, ropeXPos, ropeYPos);
+            (ropeYPos + ( ropeLen * Math.sin(Math.PI * 15 / 180))), hookWidth, hookHeight, rollSpeed, hookSpeed, ancle, ropeLen, ropeXPos, ropeYPos);
     },
     jumpFish: function (tankWidth, tankHeight, lines) {
         var fishType = Math.floor(4 * Math.random());
@@ -48,7 +50,7 @@ module.exports = {
         // fish.yPos = (tankLine + 1) * tankHeight / (lines + 1);
         fish.yPos = (220 + 300 * Math.random()).toFixed(0);
         fish.swimDirection = swimDirection;
-        console.log(fishType,swimDirection);
+        // console.log(fishType,swimDirection);
 
         switch (swimDirection) {
             case 0://from left to right

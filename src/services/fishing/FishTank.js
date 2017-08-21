@@ -12,7 +12,7 @@ var fishCount = 4;
 var hookWidth = 20;
 var hookHeight = 20;
 function updateHook(hook) {
-    if (hook.isThrowing) {
+    if (hook.isThrowing == 1) {
         hook.throwHook();
         if (hook.yPos >= tankHeight - hookHeight - 50 ||
             hook.xPos <= 50 || hook.xPos >= tankWidth - hookWidth - 50) {
@@ -40,7 +40,7 @@ function checkFishOut(fish) {
 
 
 function FishTank() {
-    this.ropeLen = 20;
+    this.ropeLen = 0;
     this.frequency = 50; //ms
     // this.leftHook = null;
     // this.rightHook = null;
@@ -65,12 +65,12 @@ function FishTank() {
 
 
     this.throwLeftHook = function () {
-        this.leftHook.isThrowing = true;
+        this.leftHook.isThrowing = 1;
 
     };
 
     this.throwRightHook = function () {
-        this.rightHook.isThrowing = true;
+        this.rightHook.isThrowing = 1;
     };
 
     function checkFishHook(ind, fish, hook) {
@@ -113,7 +113,7 @@ function FishTank() {
         for (var i = 0; i < fishCount; i++) {
             this.fishList[i].swim();
 
-            if (this.leftHook.isThrowing) {
+            if (this.leftHook.isThrowing == 1) {
                 if (!this.leftHook.hasHooked) {
                     if (checkFishHook(i, this.fishList[i], this.leftHook)) {
                         this.fishList[i].xPos = this.leftHook.xPos;
@@ -127,7 +127,7 @@ function FishTank() {
                 }
             }
 
-            if (this.rightHook.isThrowing) {
+            if (this.rightHook.isThrowing == 1) {
                 if (!this.rightHook.hasHooked) {
                     if (checkFishHook(i, this.fishList[i], this.rightHook)) {
                         this.fishList[i].xPos = this.rightHook.xPos;
@@ -150,10 +150,12 @@ function FishTank() {
                 + this.fishList[i].fishType + "," + this.fishList[i].swimDirection;
         }
 
-        pos += "," + this.leftHook.isThrowing +
+        pos += "," + this.leftHook.throwDirection + "," + this.leftHook.rollDirection +
+            ","+ this.leftHook.isThrowing +
             "," + this.leftHook.xPos + "," + this.leftHook.yPos +
             "," + this.leftHook.ancle + "," + this.leftHook.score +
             "," + this.leftHook.hasHooked + "," + this.leftHook.hookedFishType +
+            "," + this.rightHook.throwDirection + "," + this.rightHook.rollDirection +
             "," + this.rightHook.isThrowing +
             "," + this.rightHook.xPos + "," + this.rightHook.yPos +
             "," + this.rightHook.ancle + "," + this.rightHook.score +

@@ -7,13 +7,14 @@
 var express = require('express');
 var async = require('async');
 var GameServer = require('../services/GameServer');
+var RoomLogic = require('../services/RoomLogic');
 var FishTank = require('../services/fishing/FishTank');
 var router = express.Router();
 var util = require('../services/util');
 
 router.get('/getUrl', function (req, res) {
 
-    var currentRoom = res.app.locals.roomNum;
+    var currentRoom = RoomLogic.getInstance().roomNum;
     res.header('Access-Control-Allow-Origin', '*');
 
     var reqData = req.query;
@@ -41,7 +42,7 @@ router.get('/getUrl', function (req, res) {
     };
     try {
         //分配玩家身份以及把gameServer连接到socket并创建房间
-        if (res.app.locals.socket_map[res.app.locals.roomNum] == null) {
+        if (RoomLogic.getInstance().socket_map[rid] == null) {
             player = 1;
             resData.createRoom = true;
             new GameServer({
@@ -53,7 +54,7 @@ router.get('/getUrl', function (req, res) {
             }, function () {
                 roomInfo.pNum++;
                 roomInfo.player1 = uid;
-                res.app.locals.socket_map[res.app.locals.roomNum] = roomInfo;
+                RoomLogic.getInstance().socket_map[rid] = roomInfo;
             });
             res.json(200, {
                 data: resData,
@@ -61,13 +62,13 @@ router.get('/getUrl', function (req, res) {
                     player: player
                 }
             });
-        } else if (res.app.locals.socket_map[res.app.locals.roomNum] && res.app.locals.socket_map[res.app.locals.roomNum].player1 == uid) {
+        } else if (RoomLogic.getInstance().socket_map[rid] && RoomLogic.getInstance().socket_map[rid].player1 == uid) {
             res.json(400, {msg: '该玩家重复进入游戏'});
         }
         else {
             player = 2;
-            res.app.locals.socket_map[res.app.locals.roomNum].pNum++;
-            res.app.locals.roomNum++;
+            RoomLogic.getInstance().socket_map[rid].pNum++;
+            RoomLogic.getInstance().roomNum++;
             res.json(200, {
                 data: resData,
                 gd: {

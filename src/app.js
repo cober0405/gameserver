@@ -69,9 +69,6 @@ app.use(cookieParser());
 
 /* Static MiddleWare */
 app.use('/static', express.static(__dirname + '/static'));
-
-app.locals.socket_map = {};
-app.locals.roomNum = 0;
 /* API Routes */
 app.use('/api', require('./routes/api'));
 

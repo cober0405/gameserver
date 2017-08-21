@@ -8,7 +8,7 @@ function Hook(x,y,w,h,rs,ts,a,rl,rx,ry) {
     this.rollDirection = 1;
     this.ropeLengthExt = 0;
     this.throwAncle = 0;
-    this.isThrowing = false;
+    this.isThrowing = 0;
     this.hasHooked = false;
     this.xPos = x;
     this.yPos = y;
@@ -26,14 +26,14 @@ function Hook(x,y,w,h,rs,ts,a,rl,rx,ry) {
 
     this.initHookStatus = function () {
         this.throwDirection = 1;
-        this.isThrowing = false;
+        this.isThrowing = 0;
         this.hasHooked = false;
         this.hookedFishType = -1;
         this.ropeLengthExt = this.ropeLength;
     };
 
     this.throwHook = function () {
-        if (!this.isThrowing) {
+        if (this.isThrowing == 0) {
             this.throwDirection = 1;
             return;
         }
@@ -54,13 +54,13 @@ function Hook(x,y,w,h,rs,ts,a,rl,rx,ry) {
     };
 
     this.rollHook = function () {
-        if (this.isThrowing) {
+        if (this.isThrowing == 1) {
             return;
         }
-        if (this.ancle < 10 || this.ancle > 170) {
+        this.ancle += this.rollDirection * this.rollSpeed;
+        if (this.ancle == 15 || this.ancle == 165) {
             this.rollDirection = this.rollDirection * -1;
         }
-        this.ancle += this.rollDirection * this.rollSpeed;
         this.throwAncle = this.ancle;
         this.xPos = this.ropeXPos - (this.ropeLength * Math.cos(Math.PI * this.ancle/180));
         this.yPos = this.ropeYPos + (this.ropeLength * Math.sin(Math.PI * this.ancle/180));
