@@ -24,7 +24,7 @@ function updateHook(hook) {
     }
 }
 
-
+//碰撞检测
 function checkPointInFish(fish, xPos, yPos) {
     return (xPos >= fish.xPos && xPos <= fish.xPos + fish.width
     && yPos >= fish.yPos && yPos >= fish.yPos + fish.height );
